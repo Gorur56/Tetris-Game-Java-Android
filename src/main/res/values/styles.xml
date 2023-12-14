@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NavButton">
+        <!-- Her butona sıfırdan widdth ve height ekelmek yerine
+        style="@style/NavButton" bu şekilde ekliyoruz.-->
+
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+</resources>
