@@ -2,7 +2,7 @@ package com.firstapp.tetrisgamee.presenters;
 
 public enum GameStatus {
     START("START"),
-    PLAYING(PLAYING),
+    PLAYING("PLAYING"),
     OVER("GAME OVER"),
     PAUSED("GAME PAUSED");
 
