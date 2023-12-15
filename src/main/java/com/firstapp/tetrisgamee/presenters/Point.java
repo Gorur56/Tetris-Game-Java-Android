@@ -1,7 +1,7 @@
 package com.firstapp.tetrisgamee.presenters;
 
 public class Point {
-    public final x, y;
+    public final int x, y;
     public boolean isFallingPoint;
     public PointType type;
 

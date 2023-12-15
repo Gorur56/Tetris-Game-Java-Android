@@ -42,7 +42,7 @@ public class GameFrame extends View {
 
         getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             mBoxSize = Math.min(getWidth(), getHeight())/mGameSize;
-            mBoxPadding = mBoxSize / 10
+            mBoxPadding = mBoxSize / 10;
         });
     }
 
