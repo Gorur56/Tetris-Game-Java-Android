@@ -7,4 +7,12 @@ public enum GameStatus {
     PAUSED("GAME PAUSED");
 
     private final String mValue;
+
+    GameStatus(String value) {
+        this.mValue = value;
+    }
+    public String getValue()
+    {
+        return mValue;
+    }
 }
