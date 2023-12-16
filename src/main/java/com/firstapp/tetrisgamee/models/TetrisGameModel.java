@@ -77,6 +77,50 @@ public class TetrisGameModel implements GameModel {
         mFallingPoints.clear();
     }
 
+    private void generateUpcomingBrick()
+    {
+        BrickType upcomingBrick = BrickType.random();
+
+        for (int i = 0; i < UPCOMING_AREA_SIZE; i++) {
+            for (int j = 0; j < UPCOMING_AREA_SIZE; j++) {
+                mUpcomingPoints[i][j].type = PointType.EMPTY;
+            }
+        }
+
+        switch (upcomingBrick){
+            case L:
+                mUpcomingPoints[1][1].type = PointType.BOX;
+                mUpcomingPoints[2][1].type = PointType.BOX;
+                mUpcomingPoints[3][1].type = PointType.BOX;
+                mUpcomingPoints[3][2].type = PointType.BOX;
+                break;
+            case T:
+                mUpcomingPoints[1][1].type = PointType.BOX;
+                mUpcomingPoints[2][1].type = PointType.BOX;
+                mUpcomingPoints[3][1].type = PointType.BOX;
+                mUpcomingPoints[2][2].type = PointType.BOX;
+                break;
+            case CHAIR:
+                mUpcomingPoints[1][1].type = PointType.BOX;
+                mUpcomingPoints[2][1].type = PointType.BOX;
+                mUpcomingPoints[2][2].type = PointType.BOX;
+                mUpcomingPoints[3][2].type = PointType.BOX;
+                break;
+            case STICK:
+                mUpcomingPoints[0][1].type = PointType.BOX;
+                mUpcomingPoints[1][1].type = PointType.BOX;
+                mUpcomingPoints[2][1].type = PointType.BOX;
+                mUpcomingPoints[3][1].type = PointType.BOX;
+                break;
+            case SQUARE:
+                mUpcomingPoints[0][1].type = PointType.BOX;
+                mUpcomingPoints[1][2].type = PointType.BOX;
+                mUpcomingPoints[2][1].type = PointType.BOX;
+                mUpcomingPoints[2][2].type = PointType.BOX;
+                break;
+        }
+    }
+
     @Override
     public void startGame(PresenterObserver<Point[][]> onGameDrawnListener) {
 
