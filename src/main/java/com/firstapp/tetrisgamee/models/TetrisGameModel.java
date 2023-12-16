@@ -183,6 +183,15 @@ public class TetrisGameModel implements GameModel {
         return false;
     }
 
+    private boolean isOutSide(){
+        for (Point fallingPoint:mFallingPoints) {
+            if(fallingPoint.y < 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private Point getPlayingPoint(int x, int y){
         if( x >= 0 && y >= 0 &&x < PLAYING_AREA_WIGHT && y < PLAYING_AREA_HEIGHT)
         {
