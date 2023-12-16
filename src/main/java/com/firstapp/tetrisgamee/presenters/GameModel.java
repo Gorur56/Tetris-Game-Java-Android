@@ -1,7 +1,7 @@
 package com.firstapp.tetrisgamee.presenters;
 
 public interface GameModel {
-    int FPD = 60;
+    int FPS = 60;
     int SPEED = 25;
     void init();
     int getGameSize();

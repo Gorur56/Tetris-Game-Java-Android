@@ -123,7 +123,53 @@ public class TetrisGameModel implements GameModel {
 
     @Override
     public void startGame(PresenterObserver<Point[][]> onGameDrawnListener) {
+        mIsGamePaused.set(false);
+        final long sleepTime = 1000/FPs;
+        new Thread(()->{
+            long count = 0;
+            while (!mIsGamePaused.get()){
+                try {
+                    Thread.sleep(sleepTime);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
 
+                if( count % SPEED == 0)
+                {
+                    if(mIsTurning.get())
+                    {
+                        continue;
+                    }
+                    next();
+                    mHandler.post(()->onGameDrawnListener.observe(mPlayingPoints));
+                }
+                count++;
+            }
+        }).start();
+
+    }
+
+    private synchronized void next()
+    {
+
+    }
+
+    private void updateFallingPoints(){
+        if(mFallingPoints.isEmpty()){
+            for (int i = 0; i < UPCOMING_AREA_SIZE; i++) {
+                for (int j = 0; j < UPCOMING_AREA_SIZE; j++) {
+                    if(mUpcomingPoints[i][j].type == PointType.BOX)
+                    {
+                        mFallingPoints.add(new Point(j+3, i-4,
+                                PointType.BOX,true));
+                    }
+                }
+
+            }
+            generateUpcomingBrick();
+        }
     }
 
     @Override
