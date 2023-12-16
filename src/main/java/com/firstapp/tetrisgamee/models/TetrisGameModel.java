@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.firstapp.tetrisgamee.presenters.GameModel;
 import com.firstapp.tetrisgamee.presenters.GameTurn;
 import com.firstapp.tetrisgamee.presenters.Point;
+import com.firstapp.tetrisgamee.presenters.PointType;
 import com.firstapp.tetrisgamee.presenters.PresenterCompletableObserver;
 import com.firstapp.tetrisgamee.presenters.PresenterObserver;
 
@@ -22,7 +23,7 @@ public class TetrisGameModel implements GameModel {
     private Point[][] mPlayingPoints;
     private Point[][] mUpcomingPoints;
 
-    private int score;
+    private int mScore;
     private final AtomicBoolean mIsGamePaused = new AtomicBoolean();
     private final AtomicBoolean mIsTurning = new AtomicBoolean();
     private final LinkedList<Point> mFallingPoints = new LinkedList<>();
@@ -44,16 +45,36 @@ public class TetrisGameModel implements GameModel {
 
         }
 
+        mUpcomingPoints = new Point[UPCOMING_AREA_SIZE][UPCOMING_AREA_SIZE];
+
+        for (int i = 0; i < UPCOMING_AREA_SIZE; i++) {
+            for (int j = 0; j < UPCOMING_AREA_SIZE; j++) {
+                mUpcomingPoints[i][j] = mPoints[1+i][PLAYING_AREA_WIGHT+1+j];
+            }
+        }
+
+        for (int i = 0; i < PLAYING_AREA_HEIGHT;i++)
+        {
+            mPoints[i][PLAYING_AREA_WIGHT].type = PointType.VERTICAL_LINE;
+        }
+        newGame();
     }
 
     @Override
     public int getGameSize() {
-        return 0;
+        return GAME_SIZE;
     }
 
     @Override
     public void newGame() {
+        this.mScore = 0;
 
+        for (int i = 0; i < PLAYING_AREA_HEIGHT; i++) {
+            for (int j = 0; j < PLAYING_AREA_WIGHT; j++) {
+                mPlayingPoints[i][j].type = PointType.EMPTY;
+            }
+        }
+        mFallingPoints.clear();
     }
 
     @Override
