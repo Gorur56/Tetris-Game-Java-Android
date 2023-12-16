@@ -172,6 +172,24 @@ public class TetrisGameModel implements GameModel {
         }
     }
 
+    private boolean isNextMerged(){
+        for (Point fallingPoint:mFallingPoints) {
+            if (fallingPoint.y + 1 >= 0 && (fallingPoint.y == PLAYING_AREA_HEIGHT -1 ||
+                    getPlayingPoint(fallingPoint.x,fallingPoint.y).isStablePoint()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Point getPlayingPoint(int x, int y){
+        if( x >= 0 && y >= 0 &&x < PLAYING_AREA_WIGHT && y < PLAYING_AREA_HEIGHT)
+        {
+            return mPlayingPoints[y][x];
+        }
+    }
+
     @Override
     public void pauseGame() {
 
