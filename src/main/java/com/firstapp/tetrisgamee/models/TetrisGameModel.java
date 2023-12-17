@@ -175,7 +175,7 @@ public class TetrisGameModel implements GameModel {
     private boolean isNextMerged(){
         for (Point fallingPoint:mFallingPoints) {
             if (fallingPoint.y + 1 >= 0 && (fallingPoint.y == PLAYING_AREA_HEIGHT -1 ||
-                    getPlayingPoint(fallingPoint.x,fallingPoint.y).isStablePoint()))
+                    getPlayingPoint(fallingPoint.x,fallingPoint.y + 1).isStablePoint()))
             {
                 return true;
             }
@@ -190,6 +190,16 @@ public class TetrisGameModel implements GameModel {
             }
         }
         return false;
+    }
+
+    private void updatePlayingPoint( Point point)
+    {
+        if( point.x >= 0 && point.x < PLAYING_AREA_WIGHT &&
+                point.y >= 0 && point.y < PLAYING_AREA_HEIGHT)
+        {
+            mPoints[point.y][point.x] = point;
+            mPlayingPoints[point.y][point.x]= point;
+        }
     }
 
     private Point getPlayingPoint(int x, int y){
