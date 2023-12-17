@@ -30,6 +30,9 @@ public class TetrisGameModel implements GameModel {
 
     private final Handler mHandler = new Handler();
 
+    private PresenterCompletableObserver mGameOverObserver;
+    private PresenterObserver<Integer> mScoreUpdatedObserver;
+
     @Override
     public void init()
     {
@@ -153,7 +156,68 @@ public class TetrisGameModel implements GameModel {
 
     private synchronized void next()
     {
+        updateFallingPoints();
 
+        if(isNextMerged()){
+            if(isOutSide()){
+                if(mIsGameOver != null)
+                {
+                    mHandler.post(mGameOverObserver::observe);
+                }
+                mIsGamePaused.set(true);
+                return;
+            }
+            int y = mFallingPoints.stream().mapToInt(p->p.y).max().orElse(-1);
+            while (y >= 0){
+                boolean isScored = true;
+                for (int i = 0; i < PLAYING_AREA_WIGHT; i++) {
+                    Point point = getPlayingPoint(i,y);
+                    if(point.type == PointType.EMPTY)
+                    {
+                        isScored = false;
+                        break;
+                    }
+                }
+                if(isScored)
+                {
+                    mScore++;
+                    if(mScoreUpdatedObserver != null){
+                        mHandler.post(()-> mScoreUpdatedObserver.observe(mScore));
+                    }
+                    LinkedList<Point> tmPoints = new LinkedList<>();
+
+                    for (int i = 0; i <= y; i++) {
+                        for (int j = 0; j < PLAYING_AREA_WIGHT; j++) {
+                            Point point = getPlayingPoint(j, i);
+                            if (point.type == PointType.BOX) {
+                                point.type = PointType.EMPTY;
+                                if (i != y) {
+                                    tmPoints.add(new Point(point.x, point.y + 1,
+                                            PointType.BOX, false));
+                                }
+                            }
+                        }
+                    }
+
+                    tmPoints.forEach(this::updatePlayingPoint);
+                }else{
+                    y--;
+                }
+            }
+            mFallingPoints.forEach(p->p.isFallingPoint = false);
+            mFallingPoints.clear();
+        }else{
+            LinkedList<Point> tmPoints = new LinkedList<>();
+            for (Point fallingPoint: mFallingPoints) {
+                fallingPoint.type = PointType.EMPTY;
+                fallingPoint.isFallingPoint = false;
+                tmPoints.add(new Point(fallingPoint.x,fallingPoint.y+1,PointType.BOX,
+                        true));
+                mFallingPoints.clear();
+                mFallingPoints.addAll(tmPoints);
+                mFallingPoints.forEach(this.updatePlayingPoint);
+            }
+        }
     }
 
     private void updateFallingPoints(){
@@ -211,7 +275,7 @@ public class TetrisGameModel implements GameModel {
 
     @Override
     public void pauseGame() {
-
+        mIsGamePaused.set(true);
     }
 
     @Override
@@ -220,13 +284,15 @@ public class TetrisGameModel implements GameModel {
     }
 
     @Override
-    public void setGameOverListener(PresenterCompletableObserver onGameOverListener) {
-
+    public void setGameOverListener(PresenterCompletableObserver onGameOverListener)
+    {
+        this.mGameOverObserver = onGameOverListener;
     }
 
     @Override
-    public void setScoreUpdateListener(PresenterObserver<Integer> onScoreUpdatedListener) {
-
+    public void setScoreUpdateListener(PresenterObserver<Integer> onScoreUpdatedListener)
+    {
+        this.mScoreUpdatedObserver = onScoreUpdatedListener;
     }
 
     private enum BrickType {
