@@ -182,6 +182,8 @@ public class TetrisGameModel implements GameModel {
                 if (mGameOverObserver != null) {
                     mHandler.post(mGameOverObserver::onNext);
                 }
+                mScore = 0;
+                mHandler.post(() -> mScoreUpdatedObserver.observe(mScore));
                 mIsGamePaused.set(true);
                 return;
             }

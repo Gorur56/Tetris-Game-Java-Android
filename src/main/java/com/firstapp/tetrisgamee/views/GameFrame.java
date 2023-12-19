@@ -59,7 +59,7 @@ public class GameFrame extends View {
             for (int j = 0; j < mGameSize; j++) {
                 Point point = getPoint(i, j);
                 int left, right, top, bottom;
-                mPaint.setColor(Color.WHITE);
+                mPaint.setColor(Color.CYAN);
                 switch (point.type) {
                     case BOX:
                         left = mBoxSize * point.x + mBoxPadding;
