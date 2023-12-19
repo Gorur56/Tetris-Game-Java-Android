@@ -33,7 +33,6 @@ public class TetrisGameModel implements GameModel {
     private PresenterCompletableObserver mGameOverObserver;
     private PresenterObserver<Integer> mScoreUpdatedObserver;
 
-    TetrisGameModel
 
     @Override
     public void init()
