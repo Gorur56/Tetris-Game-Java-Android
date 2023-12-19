@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.firstapp.tetrisgamee.presenters.GameStatus;
 import com.firstapp.tetrisgamee.presenters.GameView;
 import com.firstapp.tetrisgamee.presenters.Point;
@@ -16,13 +14,15 @@ public class GameViewImpl implements GameView {
     private final TextView mGameStatusText;
     private final Button mGameCtlBtn;
 
-    GameViewImpl(GameFrame gameFrame, TextView gameScoreText, TextView gameStatusText,
-                 Button gameCtlBtn)
+    public GameViewImpl(GameFrame gameFrame,
+                        TextView gameScoreText,
+                        TextView gameStatusText,
+                        Button gameCtlBtn)
     {
-        this.mGameFrame = gameFrame;
-        this.mGameScoreText = gameScoreText;
-        this.mGameStatusText = gameStatusText;
-        this.mGameCtlBtn = gameCtlBtn;
+        mGameFrame = gameFrame;
+        mGameScoreText = gameScoreText;
+        mGameStatusText = gameStatusText;
+        mGameCtlBtn = gameCtlBtn;
     }
 
     @Override

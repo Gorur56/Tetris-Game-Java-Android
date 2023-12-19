@@ -23,4 +23,8 @@ public class Point {
     public boolean isFallingPoint(){
         return !isFallingPoint && type == PointType.BOX;
     }
+
+    public boolean isStablePoint() {
+        return !isFallingPoint && type == PointType.BOX;
+    }
 }

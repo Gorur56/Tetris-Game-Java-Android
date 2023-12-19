@@ -33,6 +33,9 @@ public class TetrisGameModel implements GameModel {
     private PresenterCompletableObserver mGameOverObserver;
     private PresenterObserver<Integer> mScoreUpdatedObserver;
 
+    TetrisGameModel(){
+
+    }
 
     @Override
     public void init()
@@ -128,7 +131,7 @@ public class TetrisGameModel implements GameModel {
     @Override
     public void startGame(PresenterObserver<Point[][]> onGameDrawnListener) {
         mIsGamePaused.set(false);
-        final long sleepTime = 1000/FPs;
+        final long sleepTime = 1000/FPS;
         new Thread(()->{
             long count = 0;
             while (!mIsGamePaused.get()){
@@ -161,7 +164,7 @@ public class TetrisGameModel implements GameModel {
 
         if(isNextMerged()){
             if(isOutSide()){
-                if(mIsGameOver != null)
+                if(mGameOverObserver != null)
                 {
                     mHandler.post(mGameOverObserver::observe);
                 }
@@ -216,7 +219,7 @@ public class TetrisGameModel implements GameModel {
                         true));
                 mFallingPoints.clear();
                 mFallingPoints.addAll(tmPoints);
-                mFallingPoints.forEach(this.updatePlayingPoint);
+                //mFallingPoints.forEach(this.updatePlayingPoint);
             }
         }
     }
@@ -237,11 +240,10 @@ public class TetrisGameModel implements GameModel {
         }
     }
 
-    private boolean isNextMerged(){
-        for (Point fallingPoint:mFallingPoints) {
-            if (fallingPoint.y + 1 >= 0 && (fallingPoint.y == PLAYING_AREA_HEIGHT -1 ||
-                    getPlayingPoint(fallingPoint.x,fallingPoint.y + 1).isStablePoint()))
-            {
+    private boolean isNextMerged() {
+        for (Point fallingPoint : mFallingPoints) {
+            if (fallingPoint.y + 1 >= 0 && (fallingPoint.y == PLAYING_AREA_HEIGHT - 1 ||
+                    getPlayingPoint(fallingPoint.x, fallingPoint.y + 1).isStablePoint())) {
                 return true;
             }
         }
@@ -257,13 +259,11 @@ public class TetrisGameModel implements GameModel {
         return false;
     }
 
-    private void updatePlayingPoint( Point point)
-    {
-        if( point.x >= 0 && point.x < PLAYING_AREA_WIGHT &&
-                point.y >= 0 && point.y < PLAYING_AREA_HEIGHT)
-        {
+    private void updatePlayingPoint(Point point) {
+        if (point.x >= 0 && point.x < PLAYING_AREA_WIGHT &&
+                point.y >= 0 && point.y < PLAYING_AREA_HEIGHT) {
             mPoints[point.y][point.x] = point;
-            mPlayingPoints[point.y][point.x]= point;
+            mPlayingPoints[point.y][point.x] = point;
         }
     }
 
@@ -272,6 +272,7 @@ public class TetrisGameModel implements GameModel {
         {
             return mPlayingPoints[y][x];
         }
+        return null;
     }
 
     @Override

@@ -1,16 +1,17 @@
  package com.firstapp.tetrisgamee;
 
-import androidx.appcompat.app.AppCompatActivity;
+ import android.os.Bundle;
+ import android.widget.Button;
+ import android.widget.TextView;
 
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
+ import androidx.appcompat.app.AppCompatActivity;
 
-import com.firstapp.tetrisgamee.models.GameModelFactory;
-import com.firstapp.tetrisgamee.models.GameType;
-import com.firstapp.tetrisgamee.presenters.GamePresenter;
-import com.firstapp.tetrisgamee.presenters.GameTurn;
-import com.firstapp.tetrisgamee.views.GameFrame;
+ import com.firstapp.tetrisgamee.models.GameModelFactory;
+ import com.firstapp.tetrisgamee.models.GameType;
+ import com.firstapp.tetrisgamee.presenters.GamePresenter;
+ import com.firstapp.tetrisgamee.presenters.GameTurn;
+ import com.firstapp.tetrisgamee.views.GameFrame;
+ import com.firstapp.tetrisgamee.views.GameViewFactory;
 
  public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ import com.firstapp.tetrisgamee.views.GameFrame;
 
         GamePresenter gamePresenter = new GamePresenter();
         gamePresenter.setGameModel(GameModelFactory.newGameModel(GameType.TETRIS));
-        gamePresenter.setGameView(GameViewFactory.newGameView(gameFrame, gameScoreText, gameStatusText, gameCtlBtn));
+        gamePresenter.setGameView(GameViewFactory.newGameView(gameFrame,gameScoreText,gameStatusText,gameCtlBtn));
 
         Button upBtn = findViewById(R.id.up_btn);
         Button downBtn = findViewById(R.id.down_btn);
@@ -43,7 +44,5 @@ import com.firstapp.tetrisgamee.views.GameFrame;
         gameCtlBtn.setOnClickListener(v -> gamePresenter.changeStatus());
 
         gamePresenter.init();
-    }
-
     }
 }
