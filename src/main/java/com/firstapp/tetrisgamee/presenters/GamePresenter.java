@@ -17,7 +17,7 @@ public class GamePresenter {
         mGameModel.init();
         mGameView.init(mGameModel.getGameSize());
         mGameModel.setGameOverListener(() -> setStatus(GameStatus.OVER));
-        mGameModel.setScoreUpdateListener(mGameView::setScore);
+        mGameModel.setScoreUpdatedListener(mGameView::setScore);
         setStatus(GameStatus.START);
     }
 

@@ -6,13 +6,13 @@ public enum GameStatus {
     OVER("GAME OVER"),
     PAUSED("GAME PAUSED");
 
-    private final String mValue;
+    private final String value;
 
     GameStatus(String value) {
-        this.mValue = value;
+        this.value = value;
     }
-    public String getValue()
-    {
-        return mValue;
+
+    public String getValue() {
+        return value;
     }
 }

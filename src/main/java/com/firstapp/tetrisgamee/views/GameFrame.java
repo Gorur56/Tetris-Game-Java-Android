@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.firstapp.tetrisgamee.presenters.Point;
@@ -25,34 +24,26 @@ public class GameFrame extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public GameFrame(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     private Point[][] mPoints;
-    private  int mBoxSize;
-    private  int mBoxPadding;
+    private int mBoxSize;
+    private int mBoxPadding;
     private int mGameSize;
 
     private final Paint mPaint = new Paint();
 
-    public void init(int gameSize)
-    {
-        this.mGameSize = gameSize;
-
+    public void init(int gameSize) {
+        mGameSize = gameSize;
         getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            mBoxSize = Math.min(getWidth(), getHeight())/mGameSize;
+            mBoxSize = Math.min(getWidth(), getHeight()) / mGameSize;
             mBoxPadding = mBoxSize / 10;
         });
     }
 
-    void setPoints(Point[][] points)
-    {
-        this.mPoints = points;
+    void setPoints(Point[][] points) {
+        mPoints = points;
     }
 
-    private Point getPoint(int x, int y)
-    {
+    private Point getPoint(int x, int y) {
         return mPoints[y][x];
     }
 
@@ -60,21 +51,18 @@ public class GameFrame extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mPaint.setColor(Color.BLACK);
-        canvas.drawRect(0,0,mGameSize,mGameSize,mPaint);
-
-        if( mPoints == null )
-        {
+        canvas.drawRect(0, 0, mGameSize, mGameSize, mPaint);
+        if (mPoints == null) {
             return;
         }
-
         for (int i = 0; i < mGameSize; i++) {
             for (int j = 0; j < mGameSize; j++) {
-                Point point = getPoint(i,j);
+                Point point = getPoint(i, j);
                 int left, right, top, bottom;
                 mPaint.setColor(Color.WHITE);
-                switch (point.type){
+                switch (point.type) {
                     case BOX:
-                        left = mBoxSize - point.x + mBoxPadding;
+                        left = mBoxSize * point.x + mBoxPadding;
                         right = left + mBoxSize - mBoxPadding;
                         top = mBoxSize * point.y + mBoxPadding;
                         bottom = top + mBoxSize - mBoxPadding;
@@ -90,6 +78,7 @@ public class GameFrame extends View {
                         right = left + mBoxSize;
                         top = mBoxSize * point.y;
                         bottom = top + mBoxPadding;
+                        break;
                     case EMPTY:
                     default:
                         left = mBoxSize * point.x;
@@ -99,7 +88,7 @@ public class GameFrame extends View {
                         mPaint.setColor(Color.BLACK);
                         break;
                 }
-                canvas.drawRect(left,top,right,bottom,mPaint);
+                canvas.drawRect(left, top, right, bottom, mPaint);
             }
         }
     }

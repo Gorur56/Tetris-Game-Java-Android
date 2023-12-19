@@ -14,11 +14,7 @@ public class GameViewImpl implements GameView {
     private final TextView mGameStatusText;
     private final Button mGameCtlBtn;
 
-    public GameViewImpl(GameFrame gameFrame,
-                        TextView gameScoreText,
-                        TextView gameStatusText,
-                        Button gameCtlBtn)
-    {
+    GameViewImpl(GameFrame gameFrame, TextView gameScoreText, TextView gameStatusText, Button gameCtlBtn) {
         mGameFrame = gameFrame;
         mGameScoreText = gameScoreText;
         mGameStatusText = gameStatusText;
@@ -26,30 +22,24 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void init(int gameSize)
-    {
+    public void init(int gameSize) {
         mGameFrame.init(gameSize);
     }
 
     @Override
-    public void draw(Point[][] points)
-    {
+    public void draw(Point[][] points) {
         mGameFrame.setPoints(points);
         mGameFrame.invalidate();
     }
 
     @Override
-    public void setScore(int score)
-    {
-        mGameScoreText.setText("Score:" + score);
+    public void setScore(int score) {
+        mGameScoreText.setText("Score: " + score);
     }
-
     @Override
-    public void setStatus(GameStatus status)
-    {
+    public void setStatus(GameStatus status) {
         mGameStatusText.setText(status.getValue());
-        mGameStatusText.setVisibility(status == GameStatus.PLAYING ? View.VISIBLE: View.INVISIBLE);
-        mGameCtlBtn.setText(status == GameStatus.PLAYING? "Pause":"Start");
-
+        mGameStatusText.setVisibility(status == GameStatus.PLAYING ? View.INVISIBLE : View.VISIBLE);
+        mGameCtlBtn.setText(status == GameStatus.PLAYING ? "Pause" : "Start");
     }
 }

@@ -7,9 +7,8 @@ public interface GameModel {
     int getGameSize();
     void newGame();
     void startGame(PresenterObserver<Point[][]> onGameDrawnListener);
-
     void pauseGame();
     void turn(GameTurn turn);
     void setGameOverListener(PresenterCompletableObserver onGameOverListener);
-    void setScoreUpdateListener(PresenterObserver<Integer> onScoreUpdatedListener);
+    void setScoreUpdatedListener(PresenterObserver<Integer> onScoreUpdatedListener);
 }
