@@ -7,3 +7,7 @@ TETRIS GAME
 2. Oyunun başladıktan sonraki durum;
 
 ![Screenshot 2023-12-24 202900](https://github.com/Gorur56/Tetris-Game-Java-Android/assets/54911292/a5cc0997-4574-4d0b-85f0-3814b59093a2)
+
+3. Oyunu oynarken Pause tuşuna basıldığı ekran;
+
+![Screenshot 2023-12-24 202907](https://github.com/Gorur56/Tetris-Game-Java-Android/assets/54911292/a5bcdb3b-a6ef-4c68-a9db-8724ccf3be55)
